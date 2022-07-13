@@ -7,12 +7,14 @@ const client = new Client(
 
 client.login(process.env.DISCORD_TOKEN)
 
-let botId = "979064801005301761"
+let botId = process.env.BOTID
+let channelId = process.env.CHANNELID
+let role = process.env.ROLE
 let numberEmotes = {0: "0️⃣", 1: "1️⃣", 2: "2️⃣", 3: "3️⃣", 4: "4️⃣", 5: "5️⃣", 6: "6️⃣", 7: "7️⃣", 8: "8️⃣", 9: "9️⃣", 10: "🔟"}
 let reactionEmote = '👀'
 let reactionRequirement = 5
 let timeLimit = 1200000
-let role = "@pacepal"
+
 
 const  filter = (reaction, user) => {
     return reaction.emoji.name === reactionEmote && user.id != botId;
@@ -30,7 +32,7 @@ client.on('ready', () => {
   });
 
 client.on('messageCreate', async message => {
-    if(message.content.includes("https://www.twitch.tv/") && !message.author.bot && message.channelId == '979065282683363371') {
+    if(message.content.includes("https://www.twitch.tv/") && !message.author.bot && message.channelId == channelId) {
         message.react(reactionEmote) 
 
         const collector = message.createReactionCollector( {filter: filter, time: timeLimit});
